@@ -50,7 +50,7 @@
 
 #include "pangolin_gl.h"
 
-extern const unsigned char AnonymousPro_ttf[];
+extern const unsigned char NotoSansUI_ttf[];
 
 namespace pangolin
 {
@@ -148,7 +148,7 @@ WindowInterface& CreateWindowAndBind(std::string window_title, int w, int h, con
         const std::string font_filename = PathExpand(default_font);
         context->font = std::make_shared<GlFont>(font_filename, default_font_size);
     }else{
-        context->font = std::make_shared<GlFont>(AnonymousPro_ttf, default_font_size);
+        context->font = std::make_shared<GlFont>(NotoSansUI_ttf, default_font_size);
     }
 
     context->MakeCurrent();

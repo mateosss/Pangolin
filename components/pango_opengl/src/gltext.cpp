@@ -129,6 +129,25 @@ void GlText::Draw() const
     }
 }
 
+void GlText::DrawWithHalo() const
+{
+#ifndef HAVE_GLES
+    GLfloat colour[4];
+    glGetFloatv(GL_CURRENT_COLOR, colour);
+
+    glColor4f(0.0f, 0.0f, 0.0f, 0.45f * colour[3]);
+    const GLfloat offsets[8][2] = {{-1,0},{1,0},{0,-1},{0,1},{-1,-1},{1,-1},{-1,1},{1,1}};
+    for(const auto& o : offsets) {
+        glTranslatef(o[0], o[1], 0.0f);
+        Draw();
+        glTranslatef(-o[0], -o[1], 0.0f);
+    }
+
+    glColor4fv(colour);
+#endif
+    Draw();
+}
+
 void GlText::Draw(GLfloat x, GLfloat y, GLfloat z) const
 {
     // find object point (x,y,z)' in pixel coords
@@ -157,7 +176,7 @@ void GlText::Draw(GLfloat x, GLfloat y, GLfloat z) const
 
     SetWindowOrthographic();
     glTranslatef(std::floor((GLfloat)scrn[0]), std::floor((GLfloat)scrn[1]), (GLfloat)scrn[2]);
-    Draw();
+    DrawWithHalo();
 
     // Restore viewport & matrices
     glViewport(view[0],view[1],view[2],view[3]);
@@ -180,7 +199,7 @@ void GlText::DrawWindow(GLfloat x, GLfloat y, GLfloat z) const
 
     SetWindowOrthographic();
     glTranslatef( std::floor(x), std::floor(y), z);
-    Draw();
+    DrawWithHalo();
 
     // Restore viewport & matrices
     glViewport(view[0],view[1],view[2],view[3]);

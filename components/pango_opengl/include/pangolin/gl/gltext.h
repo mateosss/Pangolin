@@ -60,6 +60,10 @@ public:
 
     // Render at (x,y,z)' in window coordinates.
     void DrawWindow(GLfloat x, GLfloat y, GLfloat z = 0.0f) const;
+
+    // Render using current transformation, surrounded by a soft dark halo
+    // so that text stays legible on top of images and 3D content.
+    void DrawWithHalo() const;
     
     // Return text that this object signifies.
     const std::string& Text() const {
